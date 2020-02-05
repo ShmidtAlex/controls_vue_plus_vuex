@@ -10,12 +10,13 @@
         <div class="input_block">
           <div class="title" :class="{blue_color: focusedColor}">HUG IS</div>
           <div class="input-wrapper"> 
-             <input class="standart_view" :type="typeLocal"
+             <input id="exactInput" class="standart_view" :type="typeLocal"
                 @keyup="pushWholeValue"
                 @keypress="changeFormat"
                 @focus="changeColor" 
                 @blur="treatInputData" 
                 @input="checkLength"
+                @mouseup="defineCursorPosition"
                 :placeholder="initialPlaceholderVal" 
                 :value="value"
                 autocomplete="off" 
@@ -43,19 +44,25 @@ export default {
       typeLocal: 'string',
       focusedColor: false,
       recordedVal: null,
-      transformedVal: ''
+      transformedVal: '',
+      runningCursorPosition: null
     }
   },
-
   computed: {
     value: function() {
       if(this.transformedVal) {
         return this.transformedVal;
       } 
     },
+    position: function() {
+      return this.runningCursorPosition;
+    }
   },
 
   methods: {
+    defineCursorPosition: function(){
+      this.runningCursorPosition = event.target.selectionStart;
+    },
     changeFormat: function() {
       let eventVal = event.target.value;
       let key = event.keyCode;  
@@ -72,7 +79,11 @@ export default {
     },
 
     pushWholeValue: function(){
+      let caretPosition = event.target.selectionStart;
       this.transformedVal = event.target.value.toString().split(' ').join('').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+      this.$nextTick(() => {
+        event.target.selectioinStart = event.target.selectionEnd = caretPosition;
+      })
     },
 
     changeColor: function(){
@@ -89,6 +100,8 @@ export default {
         event.returnValue= false;
       }
     },
+
+
   }
 };
 </script>
@@ -166,12 +179,11 @@ export default {
   letter-spacing: 0.8px;
   text-align: center;
   color: #2c2c30;
-  margin: 2px 0 0 16px;
+  margin: 2px 0 0 15px;
 }
 .standart_view {
   border: none;
-  /*border-bottom: 1px solid #c9c9cf;*/
-  border: 1px solid #c9c9cf;
+  border-bottom: 1px solid #c9c9cf;
   outline: none;
   width: 50px;
   height: 33px;

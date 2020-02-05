@@ -30,9 +30,16 @@
       var inputsArr = document.querySelectorAll('INPUT');
      
       inputsArr.forEach(function(elem){
-        elem.addEventListener("keydown", e => {});
-        elem.addEventListener("keyup", e => {});
-        elem.addEventListener("keypress", e => {});
+        elem.addEventListener("keydown", e => {
+          // console.log(e.target.value);
+          // elem.target.value = elem.target.value.replace(/[aeiou]/g, '*');
+        });
+        elem.addEventListener("keyup", e => {
+          // elem.target.value = elem.target.value.replace(/[aeiou]/g, '*');
+        });
+        elem.addEventListener("keypress", e => {
+          // elem.target.value = e.target.value.replace(/[aeiou]/g, '*');
+        });
         // elem.addEventListener("input", e => {});
       })
     },
