@@ -14,6 +14,10 @@ test task
  6. there are no comands in control #3
  7. pressing tab/tab+shift key on keyboard forces coursor to circle around controls forward and back correspondingly
 
+## Notice: 
+
+I should check if all tasks works properly
+
 ## Project setup
 ```
 npm install
